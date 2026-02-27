@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeuroPet Learning</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#8c2bee", // Violet
+              "primary-light": "#a855f7",
+              secondary: "#06b6d4", // Cyan accent
+              "background-light": "#f7f6f8",
+              "background-dark": "#121212", // Deep charcoal/black
+              "surface-dark": "#1e1e1e",
+              "surface-card": "#211c27",
+              "neon-green": "#00ff9d",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            animation: {
+              "bounce-slow": "bounce 3s infinite",
+              "pulse-glow":
+                "pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              float: "float 6s ease-in-out infinite",
+            },
+            keyframes: {
+              "pulse-glow": {
+                "0%, 100%": { opacity: 1, transform: "scale(1)" },
+                "50%": {
+                  opacity: 0.9,
+                  transform: "scale(1.05)",
+                  boxShadow: "0 0 25px rgba(140, 43, 238, 0.5)",
+                },
+              },
+              float: {
+                "0%": { transform: "translateY(0px)" },
+                "50%": { transform: "translateY(-10px)" },
+                "100%": { transform: "translateY(0px)" },
+              },
+            },
+            boxShadow: {
+              neon: "0 0 15px rgba(140, 43, 238, 0.4)",
+              "neon-strong": "0 0 25px rgba(140, 43, 238, 0.6)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        /* Mobile-like experience centered on desktop */
+        background-color: #000;
+      }
+      #root {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+      }
+      .app-container {
+        width: 100%;
+        max-width: 450px; /* Mobile width constraint */
+        background-color: #121212;
+        min-height: 100vh;
+        position: relative;
+        box-shadow: 0 0 50px rgba(0,0,0,0.5);
+      }
+      /* Hide scrollbar */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "@google/genai": "https://esm.sh/@google/genai"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
