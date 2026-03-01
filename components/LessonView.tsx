@@ -44,10 +44,49 @@ const LessonView: React.FC<LessonViewProps> = ({ onNavigate, lessonId, onComplet
     }
   };
 
-  const handleCheckAnswer = async () => {
+const handleCheckAnswer = async () => {
     if (!selectedOption) return;
     setIsChecking(true);
     setFeedback(null);
+
+    const isCorrect = selectedOption === currentQuestion.correctAnswer;
+
+    const promptText = `
+        You are Sparky, a friendly, futuristic robot pet tutor for a digital literacy app.
+        Context: The student is taking a lesson on "${currentLesson.title}".
+        Question: "${currentQuestion.question}"
+        Correct Answer: "${currentQuestion.correctAnswer}"
+        The student selected: "${selectedOption}"
+        Task: Provide a short (max 2 sentences), encouraging feedback message explaining why they are right or wrong. 
+        Tone: Enthusiastic, supportive, tech-savvy. Use emojis.
+      `;
+
+    try {
+      // LLAMADA INVISIBLE: Ahora llamamos a nuestra propia API, no a Google
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: promptText }),
+      });
+
+      const data = await response.json();
+
+      setFeedback({
+        correct: isCorrect,
+        message: data.text || "¡Buen intento! Sigue así. 🚀",
+      });
+    } catch (error) {
+      console.error("AI Error:", error);
+      setFeedback({
+        correct: isCorrect,
+        message: isCorrect 
+          ? "¡Excelente! Mis sensores detectan un conocimiento perfecto. 🤖✨" 
+          : "Casi lo logras. ¡Reintenta el escaneo de datos! 🔍",
+      });
+    } finally {
+      setIsChecking(false);
+    }
+  };
 
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
