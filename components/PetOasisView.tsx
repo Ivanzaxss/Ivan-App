@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Screen } from "../types";
-import { GoogleGenAI } from "@google/genai";
+import { createGeminiInstance } from "../utils/gemini";
 
 interface PetOasisViewProps {
   onNavigate: (screen: Screen) => void;
@@ -39,7 +39,7 @@ const PetOasisView: React.FC<PetOasisViewProps> = ({ onNavigate, completedLesson
     setIsTyping(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = createGeminiInstance();
       // In a real app, we'd maintain chat history. For simplicity/Flash-Lite usage:
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
@@ -53,7 +53,8 @@ const PetOasisView: React.FC<PetOasisViewProps> = ({ onNavigate, completedLesson
 
       setMessages(prev => [...prev, { role: "model", text: response.text || "Woof? (Connection error)" }]);
     } catch (error) {
-       setMessages(prev => [...prev, { role: "model", text: "*Sad robot noises* I couldn't reach the server." }]);
+       console.error("Chat Error:", error);
+       setMessages(prev => [...prev, { role: "model", text: "*Sad robot noises* I couldn't reach the server. Please check your API key configuration." }]);
     } finally {
       setIsTyping(false);
     }
